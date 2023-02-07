@@ -9,4 +9,8 @@ object Messages {
     const val wrongMessage = "Неверная команда."+
             " Попробуйте ввести команду \"/help\" для получения справки"
     const val welcomeMessage = "С этой команды начинается выполнение программы"
+
+    fun sendMessage(message: String) {
+        println(message)
+    }
 }

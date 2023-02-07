@@ -1,21 +1,43 @@
 import data.Commands
+import util.MessageErrorHandler
 import util.Messages
-import repository.MessageRepository
+import util.MessageHandler
 
-val messageRepository = MessageRepository()
-val commands = Commands()
 
 fun main(args: Array<String>) {
-    println(Messages.introMessage)
+    startConfiguration()
+    selectMenu()
+
+}
+
+fun startConfiguration() {
+    Messages.sendMessage(Messages.introMessage)
+    Messages.sendMessage(
+        """Введите команду "${Commands.startCommand}" для запуска работы программы
+или наберите команду: "${Commands.helpCommand}" для получения справки:
+        """.trimMargin()
+    )
+
+}
+
+fun selectMenu() {
+
     while (true) {
         when (readLine().toString()) {
-            commands.finishCommand -> messageRepository.endProgramExec()
-            commands.helpCommand -> messageRepository.getHelpInfo()
-            commands.startCommand -> messageRepository.startProgramExec()
-            else -> messageRepository.wrongCommandExec()
+            Commands.finishCommand -> MessageHandler.endProgramExec()
+            Commands.helpCommand -> MessageHandler.getHelpInfo()
+            Commands.startCommand -> startProgram()
+            else -> MessageErrorHandler.wrongCommandExec()
         }
     }
 }
+
+fun startProgram() {
+    Messages.sendMessage("Введите команду: ")
+}
+
+
+
 
 
 
