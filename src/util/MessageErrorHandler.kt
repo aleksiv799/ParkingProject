@@ -5,4 +5,6 @@ object MessageErrorHandler {
     fun wrongCommandExec() {
         Messages.sendMessage(Messages.wrongMessage)
     }
+
+
 }

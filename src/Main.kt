@@ -1,8 +1,10 @@
 import data.Commands
+import data.Manager
 import util.MessageErrorHandler
 import util.Messages
 import util.MessageHandler
 
+val manager = Manager()
 
 fun main(args: Array<String>) {
     startConfiguration()
@@ -33,7 +35,7 @@ fun selectMenu() {
 }
 
 fun startProgram() {
-    Messages.sendMessage("Введите команду: ")
+
 }
 
 
