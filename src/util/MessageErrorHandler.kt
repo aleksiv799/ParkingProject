@@ -6,5 +6,4 @@ object MessageErrorHandler {
         Messages.sendMessage(Messages.wrongMessage)
     }
 
-
 }

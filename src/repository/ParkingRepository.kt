@@ -1,13 +1,17 @@
 package repository
 
+import data.Car
+
 interface ParkingRepository {
 
 
-    fun parkByCar(parkPlace: MutableMap<String, String>)
+    fun parkByCar(carArgs: List<String>)
 
-    fun returnCarByOwner(parkPlace: MutableMap<String, String>)
+    fun returnCarByOwner(carArgs: List<String>)
 
-    fun getParkInfoByCar(parkPlace: MutableMap<String, String>)
+    fun getParkInfoByCar(carArgs: List<String>)
 
-    fun getParkIntoByPlace(parkPlace: MutableMap<String, String>)
+    fun getParkIntoByPlace(carArgs: List<String>)
+
+    fun getParkingStats()
 }
