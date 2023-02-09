@@ -4,6 +4,7 @@ class Commands {
 
     companion object {
 
+        const val parkAllStatsCommand = "/park_all_stats"
         const val parkStatsCommand = "/park_stats"
         const val startCommand = "/start"
         const val helpCommand = "/help"

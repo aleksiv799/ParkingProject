@@ -14,4 +14,6 @@ interface ParkingRepository {
     fun getParkIntoByPlace(carArgs: List<String>)
 
     fun getParkingStats()
+
+    fun getCountParkingActions()
 }

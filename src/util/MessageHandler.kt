@@ -4,10 +4,6 @@ import kotlin.system.exitProcess
 
 object MessageHandler {
 
-//    fun startProgramExec() {
-//        Messages.sendMessage(Messages.welcomeMessage)
-//    }
-
     fun endProgramExec() {
         Messages.sendMessage(Messages.overMessage)
         exitProcess(0)
@@ -16,6 +12,8 @@ object MessageHandler {
     fun getHelpInfo() {
         Messages.sendMessage(Messages.infoMessage.trimIndent())
     }
+
+
 
 
 }

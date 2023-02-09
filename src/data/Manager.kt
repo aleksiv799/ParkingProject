@@ -2,16 +2,17 @@ package data
 
 import repository.ParkingRepository
 import util.Messages
+import util.UtilFunctions
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-
 class Manager : ParkingRepository {
 
-
+    private val util = UtilFunctions()
     private val parking = Parking.initParkingPlacesScheme()
-    var time: String? = ""
+    var timeParking: Long = 0
+    var countParking: Int = 0
 
 
     override fun parkByCar(carArgs: List<String>) {
@@ -28,12 +29,13 @@ class Manager : ParkingRepository {
                 owner
             )
             val parkingPlace =
-                parking.filterValues { value -> value == null }.keys.firstOrNull()
-                    ?: throw ArgumentsException("Введены неверные аргументы для запроса," +
-                            "повторите попытку")
-
+                parking.filterValues { value -> value == null }.keys.first()
             parking[parkingPlace] = car
-            println("Автомобиль владельца ${owner.name} ${owner.surname} успешно припаркован на месте $parkingPlace")
+            Messages.sendMessage("Автомобиль владельца ${owner.name} ${owner.surname} успешно припаркован на месте $parkingPlace")
+            countParking++
+            val time = util.initTimer()
+            timeParking = System.currentTimeMillis()
+            Messages.sendMessage("Время парковки Вашего автомобиля:  $time")
         } else {
             Messages.sendMessage("Неверное количество аргументов, количество аргументов должно быть равно 5")
         }
@@ -49,23 +51,25 @@ class Manager : ParkingRepository {
             if (car?.owner != owner) {
                 Messages.sendMessage("Этот автомобиль не Ваш! Повторите попытку пожалуйста")
             } else {
-                val parkingPlace = parking.filterValues { value -> value  == car }.keys.first()
+                val parkingPlace = parking.filterValues { value -> value == car }.keys.first()
                 parking[parkingPlace] = null
                 Messages.sendMessage("Автомобиль был возвращен владельцу, место \"$parkingPlace\" теперь свободно")
+                val currentTime = (System.currentTimeMillis() - timeParking)/3600
+                Messages.sendMessage("Время пребывания на парковке вашего автомобиля - $currentTime секунд")
             }
         }
     }
 
     override fun getParkInfoByCar(carArgs: List<String>) {
         if (carArgs.size == 1) {
-           for (place in parking) {
-               if (carArgs[0] == place.value?.number) {
-                   Messages.sendMessage("Ваша машина припаркована на месте ${place.key}")
-               } else {
-                   Messages.sendMessage("Автомобиль с указанным номером на парковке не обнаружен")
-               }
-               break
-           }
+            for (place in parking) {
+                if (carArgs[0] == place.value?.number) {
+                    Messages.sendMessage("Ваша машина припаркована на месте ${place.key}")
+                } else {
+                    Messages.sendMessage("Автомобиль с указанным номером на парковке не обнаружен")
+                }
+                break
+            }
         } else {
             Messages.sendMessage("Неверное количество аргументов, количество аргументов должно быть равно 1")
         }
@@ -81,23 +85,20 @@ class Manager : ParkingRepository {
     }
 
     override fun getParkingStats() {
-        parking.forEach{println(it)}
+        parking.forEach{(key, value) ->
+            print("$key - ")
+            println(value ?: "free")
+        }
     }
+
+    override fun getCountParkingActions() {
+        Messages.sendMessage("Количество операций на парковке равно: $countParking")
+    }
+
+
 }
 
-fun initTimer(): String {
-    val time =  LocalDateTime.now()
-        .format(DateTimeFormatter.ofPattern("MMM dd yyyy, hh:mm:ss a"))
-    return time
-}
-
-fun getTime(currentTime: Int): String {
-    val initTime = initTimer().toInt()
-    val time = currentTime - initTime
-    return time.toString()
-}
-
-class ArgumentsException(override val message: String?): IllegalArgumentException(){}
+class ArgumentsException(override val message: String?) : IllegalArgumentException() {}
 
 
 

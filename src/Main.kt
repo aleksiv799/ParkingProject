@@ -1,7 +1,5 @@
-import data.Car
 import data.Commands
 import data.Manager
-import data.Owner
 import util.MessageErrorHandler
 import util.MessageHandler
 import util.Messages
@@ -27,6 +25,7 @@ fun main(args: Array<String>) {
             Commands.parkInfoByPlaceCommand -> manager.getParkIntoByPlace(carsParam)
             Commands.finishCommand -> MessageHandler.endProgramExec()
             Commands.parkStatsCommand -> manager.getParkingStats()
+            Commands.parkAllStatsCommand -> manager.getCountParkingActions()
             else -> MessageErrorHandler.wrongCommandExec()
         }
         input = readLine()
@@ -41,7 +40,6 @@ fun startConfiguration() {
         """.trimMargin()
 
     )
-
 }
 
 
