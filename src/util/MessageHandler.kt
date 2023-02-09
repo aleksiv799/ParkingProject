@@ -4,9 +4,9 @@ import kotlin.system.exitProcess
 
 object MessageHandler {
 
-    fun startProgramExec() {
-        Messages.sendMessage(Messages.welcomeMessage)
-    }
+//    fun startProgramExec() {
+//        Messages.sendMessage(Messages.welcomeMessage)
+//    }
 
     fun endProgramExec() {
         Messages.sendMessage(Messages.overMessage)

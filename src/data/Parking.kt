@@ -2,12 +2,13 @@ package data
 
 object Parking {
 
-    var parkingPlaces = mutableMapOf<String, String>()
 
-    fun initParkingPlacesScheme() {
+    fun initParkingPlacesScheme(): MutableMap<String, Car?> {
+        val parkingPlaces = mutableMapOf<String, Car?>()
         for (index in 1..20) {
-            parkingPlaces["P$index"] = "Free"
+            parkingPlaces["P$index"] = null
         }
+        return parkingPlaces
     }
 }
 
