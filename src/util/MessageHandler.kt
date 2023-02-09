@@ -1,7 +1,7 @@
 package util
 
 import util.Colors.green
-import util.Colors.resetColor
+import util.UtilFunctions.toColor
 import kotlin.system.exitProcess
 
 object MessageHandler {
@@ -16,12 +16,12 @@ object MessageHandler {
     }
 
     fun successfullyParkingMessage( ownerName: String, ownerSurname: String, parkingPlace: String) {
-        Messages.sendMessage("${green}Автомобиль владельца" +
-                " $ownerName $ownerSurname успешно припаркован на месте $parkingPlace$resetColor")
+        Messages.sendMessage("Автомобиль владельца".toColor(green) +
+                " $ownerName $ownerSurname успешно припаркован на месте $parkingPlace".toColor(green))
     }
 
     fun successfulReturnAutoMessage(parkingPlace: String) {
-        Messages.sendMessage("${green}Автомобиль был возвращен владельцу, место \"$parkingPlace\" теперь свободно$resetColor")
+        Messages.sendMessage("Автомобиль был возвращен владельцу, место \"$parkingPlace\" теперь свободно".toColor(green))
     }
 
     fun timerParkingMessage(currentTime: Long) {
@@ -31,5 +31,4 @@ object MessageHandler {
     fun timeToParkingMessage(timeParking: String) {
         Messages.sendMessage("Время парковки Вашего автомобиля: $timeParking")
     }
-
 }

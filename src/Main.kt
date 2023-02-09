@@ -17,12 +17,7 @@ fun main(args: Array<String>) {
 }
 
 fun startConfiguration() {
-    Messages.sendMessage(Messages.introMessage)
-    Messages.sendMessage(
-        """Введите команду $blue"${Commands.startCommand}"$resetColor для запуска работы программы
-или наберите команду: $blue"${Commands.helpCommand}"$resetColor для получения справки:
-        """.trimMargin()
-    )
+    Messages.sendMessage(Messages.messageHelper)
 }
 
 fun selectMenu() {

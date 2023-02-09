@@ -1,14 +1,17 @@
 package data
 
 import repository.ParkingRepository
+import util.Colors.green
+import util.Colors.red
 import util.MessageErrorHandler
 import util.MessageHandler
 import util.Messages
 import util.UtilFunctions
+import util.UtilFunctions.toColor
+
 
 class Manager : ParkingRepository {
 
-    private val util = UtilFunctions()
     private val parking = Parking.initParkingPlacesScheme()
     var timeParking: Long = 0
     var countParking: Int = 0
@@ -36,8 +39,8 @@ class Manager : ParkingRepository {
                 parkingPlace = parkingPlace
             )
             countParking++
-            val time = util.initTimer()
-            timeParking = System.currentTimeMillis()
+            val time = UtilFunctions.initTimer()
+            timeParking = System.nanoTime()
             MessageHandler.timeToParkingMessage(time)
         } else {
             MessageErrorHandler.wrongArgumentsMessage(5)
@@ -58,7 +61,7 @@ class Manager : ParkingRepository {
                 val parkingPlace = parking.filterValues { value -> value == car }.keys.first()
                 parking[parkingPlace] = null
                 MessageHandler.successfulReturnAutoMessage(parkingPlace)
-                val currentTime = (System.currentTimeMillis() - timeParking) / 3600
+                val currentTime = UtilFunctions.timerChecked(timeParking)
                 MessageHandler.timerParkingMessage(currentTime)
             }
         } else {
@@ -67,21 +70,18 @@ class Manager : ParkingRepository {
     }
 
     override fun getParkInfoByCar(carArgs: List<String>) {
-        if (checkArgumentsSize(carArgs.size, 1)) {
+
+        if (carArgs.size == 1) {
             for (place in parking) {
-                when (place.value?.number) {
-                    carArgs[0] -> {
-                        Messages.sendMessage("Ваша машина припаркована на месте ${place.key}")
-                        break
-                    }
-                    else -> {
-                        Messages.sendMessage("нет такого автомобиля")
-                        break
-                    }
+                if (carArgs[0] == place.value?.number) {
+                    Messages.sendMessage("Ваша машина припаркована на месте ${place.key}".toColor(green))
+                } else {
+                    Messages.sendMessage("Автомобиль с указанным номером на парковке не обнаружен".toColor(red))
                 }
+                break
             }
         } else {
-            MessageErrorHandler.wrongArgumentsMessage(1)
+            Messages.sendMessage("Для получения информации по авто введите его номер".toColor(red))
         }
     }
 
@@ -89,9 +89,9 @@ class Manager : ParkingRepository {
     override fun getParkIntoByPlace(carArgs: List<String>) {
         val carOnPlace = parking[carArgs[0]]
         if (carOnPlace == null) {
-            Messages.sendMessage("На этом месте нет автомобилей")
+            Messages.sendMessage("На этом месте нет автомобилей".toColor(red))
         } else {
-            Messages.sendMessage("На этом месте припаркован автомобиль: ${carOnPlace}")
+            Messages.sendMessage("На этом месте припаркован автомобиль: ${carOnPlace}".toColor(green))
         }
     }
 
@@ -103,7 +103,7 @@ class Manager : ParkingRepository {
     }
 
     override fun getCountParkingActions() {
-        Messages.sendMessage("Количество операций на парковке равно: $countParking")
+        Messages.sendMessage("Количество операций на парковке равно: $countParking".toColor(green))
     }
 
     private fun checkArgumentsSize(argsParam: Int, size: Int) = argsParam == size
