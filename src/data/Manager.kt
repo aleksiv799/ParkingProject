@@ -29,13 +29,14 @@ class Manager : ParkingRepository {
             )
             val parkingPlace =
                 parking.filterValues { value -> value == null }.keys.firstOrNull()
-                    ?: throw ArgumentsException("Введены неверные аргументы для запроса," +
+                    ?: throw ArgumentsException("Введены неверные данные для запроса," +
                             "повторите попытку")
 
             parking[parkingPlace] = car
             println("Автомобиль владельца ${owner.name} ${owner.surname} успешно припаркован на месте $parkingPlace")
         } else {
-            Messages.sendMessage("Неверное количество аргументов, количество аргументов должно быть равно 5")
+            Messages.sendMessage("Для парковки автомобиля необходимо ввести 5 значений:" +
+                    "модель, цвет, гос.номер авто, а также имя и фамилию владельца")
         }
     }
 
@@ -67,7 +68,7 @@ class Manager : ParkingRepository {
                break
            }
         } else {
-            Messages.sendMessage("Неверное количество аргументов, количество аргументов должно быть равно 1")
+            Messages.sendMessage("Для получения информации по авто введите его номер")
         }
     }
 
