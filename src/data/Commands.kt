@@ -1,3 +1,4 @@
+
 package data
 
 class Commands {
@@ -14,3 +15,4 @@ class Commands {
         const val parkInfoByPlaceCommand = "/park_info_by_place"
     }
 }
+
