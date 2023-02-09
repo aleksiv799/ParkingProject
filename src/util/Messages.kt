@@ -19,4 +19,5 @@ object Messages {
     fun sendMessage(message: String) {
         println(message)
     }
+
 }

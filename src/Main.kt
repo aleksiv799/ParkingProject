@@ -1,14 +1,31 @@
 import data.Commands
 import data.Manager
+import util.Colors.blue
+import util.Colors.resetColor
 import util.MessageErrorHandler
 import util.MessageHandler
 import util.Messages
+
 
 val manager = Manager()
 
 
 fun main(args: Array<String>) {
     startConfiguration()
+    selectMenu()
+
+}
+
+fun startConfiguration() {
+    Messages.sendMessage(Messages.introMessage)
+    Messages.sendMessage(
+        """Введите команду $blue"${Commands.startCommand}"$resetColor для запуска работы программы
+или наберите команду: $blue"${Commands.helpCommand}"$resetColor для получения справки:
+        """.trimMargin()
+    )
+}
+
+fun selectMenu() {
     var input = readLine()
     while (true) {
         val command = input?.substringBefore(" ")
@@ -30,16 +47,6 @@ fun main(args: Array<String>) {
         }
         input = readLine()
     }
-}
-
-fun startConfiguration() {
-    Messages.sendMessage(Messages.introMessage)
-    Messages.sendMessage(
-        """Введите команду "${Commands.startCommand}" для запуска работы программы
-или наберите команду: "${Commands.helpCommand}" для получения справки:
-        """.trimMargin()
-
-    )
 }
 
 

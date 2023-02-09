@@ -4,7 +4,6 @@ import data.Car
 
 interface ParkingRepository {
 
-
     fun parkByCar(carArgs: List<String>)
 
     fun returnCarByOwner(carArgs: List<String>)
